@@ -44,6 +44,12 @@ npm run demo
 
 Everything is reproducible locally. No network calls, no environment variables, no keys required, zero runtime dependencies (only `typescript`, `vitest`, and `tsx` as devDependencies).
 
+## Browser demo
+
+A static browser demo is available in `demo/`.
+
+Open `demo/index.html` locally to try mock scenarios. The demo is fully static: no wallet, no RPC, no network calls, no signing.
+
 ## API
 
 ```ts

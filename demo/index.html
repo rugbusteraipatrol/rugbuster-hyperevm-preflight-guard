@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RugBuster HyperEVM Preflight Guard — Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div class="shield-icon">&#x1F6E1;</div>
+      <h1>RugBuster HyperEVM Preflight Guard</h1>
+      <p class="subtitle">Mock pre-broadcast risk checks for HyperEVM transaction intents</p>
+      <p class="disclaimer">PoC only — no keys, no signing, no RPC, no real transactions.</p>
+    </header>
+
+    <section class="controls">
+      <label for="scenario-select">Scenario</label>
+      <select id="scenario-select">
+        <option value="allow-known">ALLOW — known contract</option>
+        <option value="warn-unlimited">WARN — unlimited approval</option>
+        <option value="block-spender">BLOCK — blocked spender</option>
+        <option value="warn-unknown">WARN — unknown contract</option>
+        <option value="warn-highvalue">WARN — high-value transfer</option>
+        <option value="block-chain">BLOCK — unsupported chain</option>
+      </select>
+      <button id="run-btn" class="run-btn">Run preflight</button>
+    </section>
+
+    <section class="output" id="output" hidden>
+      <div class="verdict-row">
+        <span class="verdict-badge" id="verdict-badge">ALLOW</span>
+        <span class="verdict-label" id="verdict-label"></span>
+      </div>
+
+      <div class="panel">
+        <h3>Reasons</h3>
+        <ul id="reasons-list"></ul>
+      </div>
+
+      <div class="panel">
+        <h3>Evidence</h3>
+        <dl class="evidence-grid" id="evidence-grid"></dl>
+      </div>
+
+      <div class="panel" id="findings-panel" hidden>
+        <h3>Findings</h3>
+        <table class="findings-table">
+          <thead><tr><th>Code</th><th>Severity</th><th>Message</th></tr></thead>
+          <tbody id="findings-body"></tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h3>Limitations</h3>
+        <ul id="limitations-list" class="limitations"></ul>
+      </div>
+    </section>
+
+    <section class="json-panels" id="json-panels" hidden>
+      <div class="panel">
+        <h3>Intent (JSON)</h3>
+        <pre id="intent-json"></pre>
+      </div>
+      <div class="panel">
+        <h3>Context (JSON)</h3>
+        <pre id="context-json"></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <a href="https://github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard" target="_blank" rel="noopener">
+        github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard
+      </a>
+      <p>Looking for feedback from HyperEVM builders: which rules matter, and should HyperCore signed actions be next?</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
