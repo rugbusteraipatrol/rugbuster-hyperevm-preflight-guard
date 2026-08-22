@@ -268,11 +268,24 @@
     // Verdict badge
     var badge = document.getElementById("verdict-badge");
     badge.textContent = result.verdict;
-    badge.className = "verdict-badge " + result.verdict.toLowerCase();
+    var stateClass = result.verdict.toLowerCase();
+    badge.className = "verdict " + stateClass;
 
     var label = document.getElementById("verdict-label");
     var labelMap = { ALLOW: "Transaction looks safe to proceed.", WARN: "Proceed with caution — review the findings below.", BLOCK: "Transaction refused by the guard." };
     label.textContent = labelMap[result.verdict] || "";
+    document.getElementById("status").textContent = "Static preflight result ready. Review reasons and evidence trace below.";
+
+    var riskMap = { ALLOW: 12, WARN: 58, BLOCK: 92 };
+    var riskValue = riskMap[result.verdict] || 0;
+    var riskPanel = document.getElementById("riskPanel");
+    riskPanel.className = "risk " + stateClass;
+    document.getElementById("riskValue").textContent = riskValue + "%";
+    document.getElementById("meterFill").style.width = riskValue + "%";
+    document.getElementById("chainScore").textContent = result.evidence.chainId || "BLOCK";
+    document.getElementById("detail").textContent =
+      "Engine: static_hyperevm_preflight_guard // Cache: local // Target: normalized mock intent // Findings: " +
+      String(result.evidence.findings.length);
 
     // Reasons
     var reasonsList = document.getElementById("reasons-list");
@@ -283,25 +296,7 @@
       reasonsList.appendChild(li);
     });
 
-    // Evidence
-    var grid = document.getElementById("evidence-grid");
-    grid.innerHTML = "";
     var ev = result.evidence;
-    var fields = [
-      ["chainId", ev.chainId !== undefined ? ev.chainId : "—"],
-      ["from", ev.from || "—"],
-      ["to", ev.to || "—"],
-      ["decodedAction", ev.decodedActionKind || "—"],
-      ["policy", JSON.stringify(ev.policyUsed)]
-    ];
-    fields.forEach(function (pair) {
-      var dt = document.createElement("dt");
-      dt.textContent = pair[0];
-      var dd = document.createElement("dd");
-      dd.textContent = pair[1];
-      grid.appendChild(dt);
-      grid.appendChild(dd);
-    });
 
     // Findings
     var findingsPanel = document.getElementById("findings-panel");
@@ -353,6 +348,12 @@
 
   document.getElementById("run-btn").addEventListener("click", run);
   document.getElementById("scenario-select").addEventListener("change", run);
+  Array.prototype.forEach.call(document.querySelectorAll(".example"), function (button) {
+    button.addEventListener("click", function () {
+      document.getElementById("scenario-select").value = button.dataset.scenario;
+      run();
+    });
+  });
 
   // Run once on load
   run();

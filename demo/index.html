@@ -7,75 +7,135 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <header class="hero">
-      <div class="shield-icon">&#x1F6E1;</div>
-      <h1>RugBuster HyperEVM Preflight Guard</h1>
-      <p class="subtitle">Mock pre-broadcast risk checks for HyperEVM transaction intents</p>
-      <p class="disclaimer">PoC only — no keys, no signing, no RPC, no real transactions.</p>
-    </header>
+  <nav>
+    <a class="brand" href="https://rugbuster.io/">RUG<span>BUSTER</span></a>
+    <a class="back" href="https://github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard" target="_blank" rel="noopener">GitHub repo</a>
+  </nav>
 
-    <section class="controls">
-      <label for="scenario-select">Scenario</label>
-      <select id="scenario-select">
-        <option value="allow-known">ALLOW — known contract</option>
-        <option value="warn-unlimited">WARN — unlimited approval</option>
-        <option value="block-spender">BLOCK — blocked spender</option>
-        <option value="warn-unknown">WARN — unknown contract</option>
-        <option value="warn-highvalue">WARN — high-value transfer</option>
-        <option value="block-chain">BLOCK — unsupported chain</option>
-      </select>
-      <button id="run-btn" class="run-btn">Run preflight</button>
+  <main>
+    <p class="eyebrow">HyperEVM intent check // static PoC</p>
+    <h1>Preflight Shield</h1>
+    <p class="intro">Mock pre-broadcast checks for HyperEVM transaction intents before a wallet, frontend, or agent would send.</p>
+
+    <section class="tool" aria-label="HyperEVM preflight demo">
+      <label for="scenario-select">Transaction scenario</label>
+      <div class="input-row">
+        <select id="scenario-select">
+          <option value="allow-known">ALLOW — known contract</option>
+          <option value="warn-unlimited">WARN — unlimited approval</option>
+          <option value="block-spender">BLOCK — blocked spender</option>
+          <option value="warn-unknown">WARN — unknown contract</option>
+          <option value="warn-highvalue">WARN — high-value transfer</option>
+          <option value="block-chain">BLOCK — unsupported chain</option>
+        </select>
+        <button id="run-btn" type="button">Run preflight</button>
+      </div>
+      <p class="status" id="status">PoC only. No keys, no signing, no RPC, no real transactions.</p>
+
+      <div class="examples">
+        <span class="section-label">Examples</span>
+        <div class="examples-list">
+          <button class="example" type="button" data-scenario="block-spender">Blocked spender</button>
+          <button class="example" type="button" data-scenario="warn-unlimited">Unlimited approval</button>
+          <button class="example" type="button" data-scenario="warn-unknown">Unknown contract</button>
+          <button class="example" type="button" data-scenario="allow-known">Known contract</button>
+        </div>
+      </div>
+
+      <div class="token visible" aria-live="polite">
+        <span class="token-fallback" aria-hidden="true">HE</span>
+        <div>
+          <p class="token-name">HyperEVM transaction intent</p>
+          <p class="token-symbol">NORMALIZED MOCK JSON</p>
+        </div>
+        <span class="token-source">STATIC<br>LOCAL DEMO</span>
+      </div>
+
+      <section class="result visible" id="output" aria-live="polite">
+        <div class="result-head">
+          <span class="verdict" id="verdict-badge">ALLOW</span>
+          <span class="latency" id="verdict-label"></span>
+        </div>
+        <div class="risk allow" id="riskPanel">
+          <strong id="riskValue">0%</strong>
+          <div class="meter" aria-label="Risk score"><span id="meterFill"></span></div>
+        </div>
+        <ul class="reasons" id="reasons-list"></ul>
+        <p class="detail" id="detail">Engine: static_preflight_guard // Cache: local // Target: HyperEVM intent</p>
+
+        <div class="deep-analysis visible" id="json-panels">
+          <div class="deep-head">
+            <p class="deep-title">Evidence Trace</p>
+            <a class="pair-link" href="https://github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard" target="_blank" rel="noopener">Open repo</a>
+          </div>
+
+          <div class="score-grid">
+            <div class="score-card">
+              <span>Chain</span>
+              <strong id="chainScore">999</strong>
+              <p>HyperEVM mainnet/testnet IDs only: 999 or 998.</p>
+            </div>
+            <div class="score-card">
+              <span>Mode</span>
+              <strong>MOCK</strong>
+              <p>No wallet, no RPC, no calldata decoding, no broadcast.</p>
+            </div>
+          </div>
+
+          <div class="cia-grid" aria-label="Preflight module trace">
+            <div class="cia-card good">
+              <span>Address Shape</span>
+              <p>Checks invalid or missing EVM-style addresses.</p>
+            </div>
+            <div class="cia-card warn">
+              <span>Approval Risk</span>
+              <p>Flags unlimited approvals and unknown spenders.</p>
+            </div>
+            <div class="cia-card danger">
+              <span>Blocklist</span>
+              <p>Blocks caller-supplied blocked contracts or spenders.</p>
+            </div>
+            <div class="cia-card warn">
+              <span>Contract Trust</span>
+              <p>Warns when known-contract policy is enabled.</p>
+            </div>
+            <div class="cia-card warn">
+              <span>Value Guard</span>
+              <p>Warns on high-value native transfers.</p>
+            </div>
+          </div>
+
+          <div class="score-grid json-grid">
+            <div class="score-card json-card">
+              <span>Intent JSON</span>
+              <pre id="intent-json"></pre>
+            </div>
+            <div class="score-card json-card">
+              <span>Context JSON</span>
+              <pre id="context-json"></pre>
+            </div>
+          </div>
+
+          <div class="score-card findings-card" id="findings-panel" hidden>
+            <span>Findings</span>
+            <table class="findings-table">
+              <thead><tr><th>Code</th><th>Severity</th><th>Message</th></tr></thead>
+              <tbody id="findings-body"></tbody>
+            </table>
+          </div>
+
+          <div class="ai-card">
+            <span>Limitations</span>
+            <ul id="limitations-list" class="limitations"></ul>
+          </div>
+        </div>
+
+        <p class="result-disclaimer">Informational PoC only — not financial, legal, investment, or production security advice.</p>
+      </section>
     </section>
+  </main>
 
-    <section class="output" id="output" hidden>
-      <div class="verdict-row">
-        <span class="verdict-badge" id="verdict-badge">ALLOW</span>
-        <span class="verdict-label" id="verdict-label"></span>
-      </div>
-
-      <div class="panel">
-        <h3>Reasons</h3>
-        <ul id="reasons-list"></ul>
-      </div>
-
-      <div class="panel">
-        <h3>Evidence</h3>
-        <dl class="evidence-grid" id="evidence-grid"></dl>
-      </div>
-
-      <div class="panel" id="findings-panel" hidden>
-        <h3>Findings</h3>
-        <table class="findings-table">
-          <thead><tr><th>Code</th><th>Severity</th><th>Message</th></tr></thead>
-          <tbody id="findings-body"></tbody>
-        </table>
-      </div>
-
-      <div class="panel">
-        <h3>Limitations</h3>
-        <ul id="limitations-list" class="limitations"></ul>
-      </div>
-    </section>
-
-    <section class="json-panels" id="json-panels" hidden>
-      <div class="panel">
-        <h3>Intent (JSON)</h3>
-        <pre id="intent-json"></pre>
-      </div>
-      <div class="panel">
-        <h3>Context (JSON)</h3>
-        <pre id="context-json"></pre>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <a href="https://github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard" target="_blank" rel="noopener">
-        github.com/rugbusteraipatrol/rugbuster-hyperevm-preflight-guard
-      </a>
-      <p>Looking for feedback from HyperEVM builders: which rules matter, and should HyperCore signed actions be next?</p>
-    </footer>
-  </div>
+  <footer>RUGBUSTER // HYPEREVM PREFLIGHT SHIELD // STATIC DEMO</footer>
 
   <script src="app.js"></script>
 </body>
