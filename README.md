@@ -48,7 +48,7 @@ Everything is reproducible locally. No network calls, no environment variables, 
 
 A static browser demo is available in `demo/`.
 
-Open `demo/index.html` locally to try mock scenarios. The demo is fully static: no wallet, no RPC, no network calls, no signing.
+Open `demo/index.html` locally, paste a mock HyperEVM address, choose a mock transaction type, and run the preflight check. The demo is static: no wallet, no RPC, no API calls, no signing.
 
 ## API
 

@@ -21,8 +21,14 @@
     <p class="intro">Mock pre-broadcast checks for HyperEVM transaction intents before a wallet, frontend, or agent would send.</p>
 
     <section class="tool" aria-label="HyperEVM preflight demo">
-      <label for="scenario-select">Transaction scenario</label>
+      <label for="address-input">Contract / spender address</label>
       <div class="input-row">
+        <input id="address-input" type="text" autocomplete="off" spellcheck="false" placeholder="0x...">
+        <button id="run-btn" type="button">Check</button>
+      </div>
+
+      <div class="scenario-row">
+        <label for="scenario-select">Mock transaction type</label>
         <select id="scenario-select">
           <option value="allow-known">ALLOW — known contract</option>
           <option value="warn-unlimited">WARN — unlimited approval</option>
@@ -31,17 +37,16 @@
           <option value="warn-highvalue">WARN — high-value transfer</option>
           <option value="block-chain">BLOCK — unsupported chain</option>
         </select>
-        <button id="run-btn" type="button">Run preflight</button>
       </div>
       <p class="status" id="status">PoC only. No keys, no signing, no RPC, no real transactions.</p>
 
       <div class="examples">
         <span class="section-label">Examples</span>
         <div class="examples-list">
-          <button class="example" type="button" data-scenario="block-spender">Blocked spender</button>
-          <button class="example" type="button" data-scenario="warn-unlimited">Unlimited approval</button>
-          <button class="example" type="button" data-scenario="warn-unknown">Unknown contract</button>
-          <button class="example" type="button" data-scenario="allow-known">Known contract</button>
+          <button class="example" type="button" data-scenario="block-spender" data-address="0xbad0000000000000000000000000000000000000">Blocked spender</button>
+          <button class="example" type="button" data-scenario="warn-unlimited" data-address="0xc000000000000000000000000000000000000001">Unlimited approval</button>
+          <button class="example" type="button" data-scenario="warn-unknown" data-address="0x9999999999999999999999999999999999999999">Unknown contract</button>
+          <button class="example" type="button" data-scenario="allow-known" data-address="0x1111111111111111111111111111111111111111">Known contract</button>
         </div>
       </div>
 

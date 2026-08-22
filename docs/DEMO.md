@@ -6,6 +6,8 @@ A static, offline browser demo for the HyperEVM Preflight Guard PoC.
 
 Open `demo/index.html` in any modern browser. No server, no build step, no dependencies.
 
+Paste an EVM-style address (`0x...`), choose a mock transaction type, and click **Check**.
+
 ## What it does
 
 The demo mirrors the TypeScript guard logic in plain JavaScript. It evaluates mock HyperEVM transaction intents against the same deterministic rules as the npm package:

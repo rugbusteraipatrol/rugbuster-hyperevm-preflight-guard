@@ -110,7 +110,7 @@ label, .section-label {
   grid-template-columns:minmax(0,1fr) 170px;
   gap:10px;
 }
-select {
+input, select {
   width:100%;
   min-width:0;
   height:52px;
@@ -122,9 +122,16 @@ select {
   font:16px "Share Tech Mono",Consolas,monospace;
   outline:none;
 }
-select:focus {
+input:focus, select:focus {
   border-color:var(--green);
   box-shadow:0 0 0 3px rgba(77,255,184,.16);
+}
+input::placeholder { color:rgba(149,184,172,.55); }
+.scenario-row {
+  margin-top:18px;
+}
+.scenario-row select {
+  width:100%;
 }
 button {
   min-height:52px;

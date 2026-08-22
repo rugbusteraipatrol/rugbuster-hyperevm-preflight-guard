@@ -259,6 +259,37 @@
 
   // --- Rendering ---
 
+  function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function scenarioWithAddress(baseScenario, address) {
+    var scenario = clone(baseScenario);
+    if (!isValidAddress(address)) return scenario;
+
+    if (scenario.intent) {
+      if (scenario.intent.decodedAction && scenario.intent.decodedAction.kind === "erc20_approve") {
+        scenario.intent.decodedAction.token = scenario.intent.to || scenario.intent.decodedAction.token;
+        if (scenario.label.indexOf("blocked spender") !== -1) {
+          scenario.intent.decodedAction.spender = address;
+          scenario.context.blockedAddresses = [address];
+        } else {
+          scenario.intent.to = address;
+          scenario.intent.decodedAction.token = address;
+          scenario.context.knownContracts = [address];
+        }
+      } else {
+        scenario.intent.to = address;
+        if (scenario.label.indexOf("unknown contract") !== -1) {
+          scenario.context.knownContracts = [];
+        } else {
+          scenario.context.knownContracts = [address];
+        }
+      }
+    }
+    return scenario;
+  }
+
   function render(result, scenario) {
     var output = document.getElementById("output");
     var jsonPanels = document.getElementById("json-panels");
@@ -340,17 +371,28 @@
 
   function run() {
     var key = document.getElementById("scenario-select").value;
-    var scenario = SCENARIOS[key];
-    if (!scenario) return;
+    var baseScenario = SCENARIOS[key];
+    if (!baseScenario) return;
+    var addressInput = document.getElementById("address-input");
+    var address = addressInput.value.trim();
+    if (!address) {
+      address = baseScenario.intent.to || "0x1111111111111111111111111111111111111111";
+      addressInput.value = address;
+    }
+    var scenario = scenarioWithAddress(baseScenario, address);
     var result = analyze(scenario.intent, scenario.context);
     render(result, scenario);
   }
 
   document.getElementById("run-btn").addEventListener("click", run);
   document.getElementById("scenario-select").addEventListener("change", run);
+  document.getElementById("address-input").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") run();
+  });
   Array.prototype.forEach.call(document.querySelectorAll(".example"), function (button) {
     button.addEventListener("click", function () {
       document.getElementById("scenario-select").value = button.dataset.scenario;
+      document.getElementById("address-input").value = button.dataset.address;
       run();
     });
   });
