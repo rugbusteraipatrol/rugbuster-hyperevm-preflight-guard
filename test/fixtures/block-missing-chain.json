@@ -1,0 +1,14 @@
+{
+  "description": "Missing chainId — should BLOCK",
+  "context": {
+    "knownContracts": [],
+    "knownSpenders": [],
+    "blockedAddresses": []
+  },
+  "intent": {
+    "id": "fixture-block-no-chain",
+    "from": "0xa000000000000000000000000000000000000001",
+    "to": "0x1111111111111111111111111111111111111111",
+    "valueWei": "0"
+  }
+}

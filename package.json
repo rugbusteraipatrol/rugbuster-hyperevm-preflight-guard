@@ -1,0 +1,23 @@
+{
+  "name": "@rugbuster/hyperevm-preflight-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source pre-broadcast risk guard PoC for mock HyperEVM transaction intents.",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "demo": "tsx src/demo.ts",
+    "check": "npm run build && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}

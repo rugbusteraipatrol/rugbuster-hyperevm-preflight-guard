@@ -1,0 +1,21 @@
+{
+  "description": "Unlimited ERC-20 approval to a known spender — should WARN",
+  "context": {
+    "knownContracts": ["0xc000000000000000000000000000000000000001"],
+    "knownSpenders": ["0x2222222222222222222222222222222222222222"],
+    "blockedAddresses": []
+  },
+  "intent": {
+    "id": "fixture-warn-unlimited",
+    "chainId": 999,
+    "from": "0xa000000000000000000000000000000000000001",
+    "to": "0xc000000000000000000000000000000000000001",
+    "valueWei": "0",
+    "decodedAction": {
+      "kind": "erc20_approve",
+      "token": "0xc000000000000000000000000000000000000001",
+      "spender": "0x2222222222222222222222222222222222222222",
+      "amount": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    }
+  }
+}

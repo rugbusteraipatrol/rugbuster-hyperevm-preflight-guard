@@ -1,0 +1,15 @@
+{
+  "description": "Known contract, low value, no decoded action — should ALLOW",
+  "context": {
+    "knownContracts": ["0x1111111111111111111111111111111111111111"],
+    "knownSpenders": [],
+    "blockedAddresses": []
+  },
+  "intent": {
+    "id": "fixture-allow-known",
+    "chainId": 999,
+    "from": "0xa000000000000000000000000000000000000001",
+    "to": "0x1111111111111111111111111111111111111111",
+    "valueWei": "1000000000000000000"
+  }
+}

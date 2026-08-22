@@ -1,0 +1,16 @@
+{
+  "description": "Interaction with unknown contract, requireKnownContract enabled — should WARN",
+  "context": {
+    "knownContracts": [],
+    "knownSpenders": [],
+    "blockedAddresses": [],
+    "policy": { "requireKnownContract": true }
+  },
+  "intent": {
+    "id": "fixture-warn-unknown",
+    "chainId": 999,
+    "from": "0xa000000000000000000000000000000000000001",
+    "to": "0x9999999999999999999999999999999999999999",
+    "valueWei": "0"
+  }
+}

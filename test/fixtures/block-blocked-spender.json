@@ -1,0 +1,21 @@
+{
+  "description": "ERC-20 approval to a blocked spender — should BLOCK",
+  "context": {
+    "knownContracts": ["0xc000000000000000000000000000000000000001"],
+    "knownSpenders": [],
+    "blockedAddresses": ["0xbad0000000000000000000000000000000000000"]
+  },
+  "intent": {
+    "id": "fixture-block-spender",
+    "chainId": 999,
+    "from": "0xa000000000000000000000000000000000000001",
+    "to": "0xc000000000000000000000000000000000000001",
+    "valueWei": "0",
+    "decodedAction": {
+      "kind": "erc20_approve",
+      "token": "0xc000000000000000000000000000000000000001",
+      "spender": "0xbad0000000000000000000000000000000000000",
+      "amount": "1000000000000000000"
+    }
+  }
+}
