@@ -24,9 +24,10 @@ The demo mirrors the TypeScript guard logic in plain JavaScript. It evaluates mo
 
 - No wallet connection
 - No RPC calls
-- No network requests
+- No wallet/RPC/API network requests
 - No signing
-- No external scripts, CDNs, or fonts
+- No external scripts or analytics
+- Uses the same Google Fonts family as the RugBuster Shield demo for visual consistency
 - No analytics or tracking
 
 ## Files
